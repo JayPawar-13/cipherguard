@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CipherGuard — Secure Login Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">[&gt;]</span>
+    <span class="brand-name">CIPHERGUARD</span>
+  </div>
+  <div class="engine-status" id="engineStatus">
+    <span class="status-dot" id="statusDot"></span>
+    <span id="statusText">loading engine…</span>
+  </div>
+</header>
+
+<main class="stage">
+
+  <!-- ============ SCREEN 1: LOGIN ============ -->
+  <section class="screen active" id="loginScreen">
+    <div class="card">
+      <p class="eyebrow">step 01 — identify &amp; authenticate</p>
+      <h1>Sign in</h1>
+      <p class="subtext">Enter your email or 10-digit phone number, then set a password strong enough to continue.</p>
+
+      <label class="field-label" for="loginId">Login ID</label>
+      <input type="text" id="loginId" class="input" placeholder="you@example.com or 9876543210" autocomplete="off">
+      <p class="field-hint" id="idHint"></p>
+
+      <label class="field-label" for="password">Password</label>
+      <input type="text" id="password" class="input mono" placeholder="Type or generate a password" autocomplete="off">
+
+      <div class="strength-block">
+        <div class="strength-track">
+          <div class="strength-fill" id="strengthFill"></div>
+        </div>
+        <div class="strength-meta">
+          <span id="strengthLabel">—</span>
+          <span id="strengthScore">0/100</span>
+        </div>
+        <ul class="feedback-list" id="feedbackList"></ul>
+      </div>
+
+      <div class="button-row">
+        <button class="btn btn-ghost" id="btnCheck" type="button">Check strength</button>
+        <button class="btn btn-ghost" id="btnGenerate" type="button">Generate strong password</button>
+      </div>
+      <button class="btn btn-primary btn-block" id="btnLogin" type="button" disabled>Login</button>
+      <p class="login-note" id="loginNote">Password strength must be above 50% to continue.</p>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 2: TOTP ============ -->
+  <section class="screen" id="totpScreen">
+    <div class="card">
+      <p class="eyebrow">step 02 — two-factor verification</p>
+      <h1>Confirm it's you</h1>
+      <p class="subtext">Re-enter the login ID you just used. We'll match it against this session before issuing a code.</p>
+
+      <label class="field-label" for="confirmId">Login ID</label>
+      <input type="text" id="confirmId" class="input" placeholder="you@example.com or 9876543210" autocomplete="off">
+      <p class="field-hint" id="confirmHint"></p>
+
+      <button class="btn btn-primary btn-block" id="btnSendCode" type="button">Send verification code</button>
+
+      <div class="totp-panel" id="totpPanel" hidden>
+        <div class="ring-wrap">
+          <svg viewBox="0 0 120 120" class="ring-svg">
+            <circle cx="60" cy="60" r="52" class="ring-track"></circle>
+            <circle cx="60" cy="60" r="52" class="ring-progress" id="ringProgress"></circle>
+          </svg>
+          <div class="ring-code" id="ringSeconds">30</div>
+        </div>
+        <p class="delivery-note" id="deliveryNote"></p>
+
+        <label class="field-label" for="otpInput">Enter the 6-digit code</label>
+        <input type="text" id="otpInput" class="input mono otp-input" maxlength="6" placeholder="••••••" autocomplete="off">
+        <button class="btn btn-primary btn-block" id="btnVerify" type="button">Verify &amp; login</button>
+        <p class="verify-error" id="verifyError"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3: SUCCESS ============ -->
+  <section class="screen" id="successScreen">
+    <div class="card card-center">
+      <div class="success-mark">&#10003;</div>
+      <h1>Login successful</h1>
+      <p class="subtext">Verified <span id="successId" class="mono"></span> via time-based one-time code.</p>
+      <button class="btn btn-ghost btn-block" id="btnRestart" type="button">Start a new session</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footnote">
+  Demo mode — codes are shown on screen instead of a real SMS/email for this build. Session data lives only in memory and clears on refresh.
+</footer>
+
+<script src="auth.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

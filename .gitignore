@@ -1,0 +1,17 @@
+# Compiled binaries
+cipherguard
+*.o
+*.exe
+*.out
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+
+# NOTE: web/auth.js and web/auth.wasm are intentionally NOT ignored —
+# GitHub Pages needs these compiled files committed to the repo since
+# it can only serve static files, not run a build step.
