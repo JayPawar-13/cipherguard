@@ -263,19 +263,6 @@ docs/
 
 # 🚀 Deploying with GitHub Pages
 
-1. Push the repository to GitHub.
-2. Go to **Settings → Pages**.
-3. Under **Source**, choose **Deploy from a branch**.
-4. Select:
-
-```text
-Branch: main
-Folder: /docs
-```
-
-5. Save the settings.
-6. Wait a few minutes for deployment.
-
 The website will be available at:
 
 ```text
